@@ -37,32 +37,29 @@ class App extends Component {
     const check = e.currentTarget;
     const newSkill = e.currentTarget.value;
     const isChecked = check.checked;
+
+
+    if (currentSkills.length < 3 && isChecked) {
+      
+      // Está marcado y hay menos de 3 skills
+      currentSkills.push(newSkill);
     
+    } else {
+      
+      // No está marcado o hay 3 skills o más
+      check.checked = false;
+      // si existe tengo que borrarlo
+      const index = currentSkills.indexOf(newSkill);
+      if (index > -1) {
+        currentSkills.splice(index, 1);
+      } 
     
-      // Está marcado
-      console.log(newSkill);
+    }
 
-      if (currentSkills.length < 3 && isChecked) {
-        currentSkills.push(newSkill);
-
-        
-      } else {
-        check.checked = false;
-
-        // si existe tengo que borrarlo
-        const index = currentSkills.indexOf(newSkill);
-        if (index > -1) {
-          currentSkills.splice(index, 1);
-        } 
-      }
-
-      const newCard = {...card, skills: currentSkills}
-      this.setState({
-        card: newCard
-      });
-    
-    
-
+    const newCard = {...card, skills: currentSkills};
+    this.setState({
+      card: newCard
+    });
   }
 
   render() {
