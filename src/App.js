@@ -7,6 +7,10 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    this.defaultCard = {
+      skills: []
+    };
+
     this.state = {
       skills: [],
       card: {
@@ -29,6 +33,16 @@ class App extends Component {
 
   componentDidMount(){
     this.getSkills();
+    this.getCard();
+  }
+
+  getCard() {
+    // Guardo en savedCard el contenido del LS o mi defaultCard (que defino en el constructor)
+    const savedCard = (localStorage.getItem('awesomeCard') !== null) ? JSON.parse(localStorage.getItem('awesomeCard')) : this.defaultCard;
+
+    this.setState({
+      card: savedCard
+    })
   }
 
   saveCard(myCard) {
@@ -86,7 +100,15 @@ class App extends Component {
             return (
               <li className="skill" key={index}>
                 <label htmlFor={`skill--${index}`}>
-                  <input type="checkbox" id={`skill--${index}`} name="skill" value={item} onClick={this.addSkillorNot} /> {item}
+                  <input 
+                    type="checkbox" 
+                    id={`skill--${index}`} 
+                    name="skill" 
+                    value={item} 
+                    onClick={this.addSkillorNot} 
+                    defaultChecked={(this.state.card.skills.indexOf(item) > -1) ? true: false}
+                  />
+                  {item}
                 </label>
               </li>
             );
