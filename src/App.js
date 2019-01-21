@@ -31,6 +31,10 @@ class App extends Component {
     this.getSkills();
   }
 
+  saveCard(myCard) {
+    localStorage.setItem('awesomeCard', JSON.stringify(myCard));
+  }
+
   addSkillorNot(e){
     const {card} = this.state;
     const currentSkills = card.skills.slice(0);
@@ -57,6 +61,7 @@ class App extends Component {
     }
 
     const newCard = {...card, skills: currentSkills};
+    this.saveCard(newCard);
     this.setState({
       card: newCard
     });
